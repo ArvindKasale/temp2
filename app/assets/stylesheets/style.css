@@ -1,0 +1,68 @@
+/* ---------------- RESET ----------------------- */
+* {padding:0; margin:0}
+body {font-family:Arial, Helvetica, sans-serif; font-size:12px; color:#333}
+a , input {outline:none; }
+
+/* ---------------- GLOBAL ELEMENTS ----------------------- */
+.clear {clear:both; height:0px;}
+.fLeft {float:left; margin-right:5px;}
+
+/* ---------------- MAIN STRUCTURE ----------------------- */
+.wrapper { background:#f7f7f7 url(../assets/bgWrapper.gif) repeat-x left top}
+.header {margin:0 auto; width:1000px; height:40px}
+.contentWrapper {margin:20px auto 0 auto; width:1000px; padding-bottom:20px;}
+.footer {background:#464646; padding:10px;}
+
+
+
+/* ---------------- COMPONENTS ----------------------- */
+.rBox {border:1px solid #cbcbcb; -moz-border-radius:5px; border-radius:5px; -webkit-border-radius:5px; background:#fff; -moz-box-shadow: 0px 0px 4px #ccc; -webkit-box-shadow: 0px 0px 4px #ccc;
+  box-shadow:0px 0px 4px #ccc;  
+}
+.heading {font-size:18px; color:#333; font-weight:normal; border-bottom:1px solid #e6e6e6; padding:8px 13px}
+
+
+
+.logo {float:left; width:230px;}
+.logo h1 {color:#fff; font-weight:normal; font-size:22px; padding:5px;}
+
+.topLinks {float:right; width:600px; color:#ffffff;}
+.topLinks ul {}
+.topLinks ul li {list-style-type:none; float:right; margin:8px;}
+.topLinks ul li a {color:#fff; text-decoration:none; font-size:12px;}
+/*.topLinks ul li a.sublink{background: url("../assets/arrow.gif") no-repeat scroll 65px 6px transparent; float: left; padding-right: 15px;}*/
+.topLinks ul li a:hover {color:#1596f9}
+
+.colOne {float:left; width:298px;}
+.colTwo {float:left; width:670px; margin-left:20px;}
+
+
+
+/* ---------------- FORM ELEMENTS ----------------------- */
+.formWrapper {float:left; padding:13px;}
+.formRow {float:left; margin-bottom:17px;}
+
+
+.colOne .formRow .label {float:left; width:126px;}
+.colOne .formRow .input {float:left; width:145px;}
+
+.colTwo .formRow .label {float:left; width:172px;}
+.colTwo .formRow .input {float:left; width:462px;}
+.select01 {width:142px; font-family:Arial, Helvetica, sans-serif; font-size: 12px; padding:2px; border:1px solid #898989; -moz-border-radius:2px; border-radius:2px; -webkit-border-radius:2px; }
+.input01 {width:136px; padding:4px 3px; border:1px solid #898989; font-size: 12px; -moz-border-radius:2px; border-radius:2px; -webkit-border-radius:2px; }
+.input02 {width:207px; padding:4px 3px; border:1px solid #898989; font-size: 12px; -moz-border-radius:2px; border-radius:2px; -webkit-border-radius:2px;}
+
+.btn { padding:2px 4px; font-size:12px; font-weight:bold; cursor:pointer;  -moz-border-radius:2px; border-radius:2px; -webkit-border-radius:2px; margin-right:10px;  }
+.type01 {background:url(../assets/bgBtn.gif) repeat-x 0 -22px; border:1px solid #9c9c9c;color:#3e3e3e; text-shadow:1px 1px #fefefe; text-decoration: none}
+.type02 {background:url(../assets/bgBtn.gif) repeat-x; border:1px solid #0552ba; color:#fff; font-size:12px; text-shadow:1px 1px #0036bc; text-decoration: none}
+.btn:hover {background:#f08c09; border:1px solid #8d5102; color:#fff;  text-shadow:1px 1px #8d5102}
+.edit {background:url(../assets/iconSprite.png) no-repeat left top; width:22px; height:22px; float:left; display:block}
+.delete {background:url(../assets/iconSprite.png) no-repeat -26px 0; width:22px; height:22px; float:left; display:block}
+.error {color:#f00}
+.waterMark {color:#c5c5c5}
+.inputTxt {color:#333}
+
+/*-------------------Added by me-------------------------- */
+ul { list-style-type: none; }
+.input li{text-decoration: none;}
+.formRowList{float:left;}

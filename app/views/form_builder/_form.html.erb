@@ -1,0 +1,368 @@
+<%=javascript_include_tag "drag_drop_sort"%>
+<script type="text/javascript">
+ $(document).ready(function(){
+ 	prePopulateData();
+ 	//From the given js file
+ 		
+ 	//End
+ 	$("#lockForm").click(function(event){
+ 		var order="";
+ 		$("#sortable").children().each(function()
+ 		{
+ 		   
+ 		    $(this).children().each(function(){
+ 		     var id=($(this).attr("id")).split('_')[1];
+ 			 order+=id+"_";
+ 			});
+  		});
+  		$.ajax({
+  	 	url: '/form_builder/reorder_elements',
+  	 	data: {order: function(){
+  	 		return order.slice(0,(order.length-1));
+  	 	}},
+  	 	});
+ 	
+ 	
+ 	}); 	
+ 	$("#saveForm").click(function(event){
+ 	 var order="";
+ 		$("#sortable").children().each(function()
+ 		{
+ 		   var id=($(this).attr("id")).split('_')[1];
+ 		   order+=id+"_";
+   		});
+  	 
+  	 $.ajax({
+  	 	url: '/form_builder/reorder_elements',
+  	 	data: {order: function(){
+  	 		return order.slice(0,(order.length-1));
+  	 	}},
+  	 
+  	 });	
+  	 //event.preventDefault(); 	
+ 	});
+ 	 	
+    function prePopulateData()
+    {
+    	var count=0;
+    	//alert("In here");
+    	<% @elements.each do |element|%>
+    	var element_type=<%=element.category_id%>;
+		var name="<%=element.name%>";
+		//alert(name);
+		var input="<%=element.input%>";
+		var length="<%=element.length%>";
+		var entries="<%=escape_javascript(element.entries)%>";
+		var elementId="<%=element.id%>";
+		//alert(elementId);
+		createElement(element_type,name,input,length,entries,count,elementId);
+		<%end%>
+    }
+    
+    $("#sortable").sortable({
+			revert: true
+	});   
+ 	
+ 	/* 
+ 	$(".repeatDiv").draggable({
+ 		connectToSortable: "#sortable",
+ 		helper: 'original',
+ 		containment: 'parent',
+ 		revert: 'invalid',
+ 	});
+ 	*/
+ 	//$( "ul, li" ).disableSelection();
+ 	/*$(".rightContainer").droppable({
+ 		accept: '.repeatDiv',
+ 		drop: function(event,ui)
+ 		{
+ 			$(this).append(ui.draggable);
+ 		},
+ 	});
+ 	*/
+	$("#create").click(function(event){
+		var flag=true;
+		flag=checkIfValidElement();
+		
+		if(flag)
+		{
+		var count=0;
+		var element_type=$("#elements").val();
+		var width=$("#width").val();
+		var height=$("#height").val();
+		var name=$("#name").val();
+		var input=$("#input").val();
+		var length=$("#length").val();
+		var entries=$("#entries").val();
+		//alert("")
+		event.preventDefault();
+		$.ajax({
+			url: "/form_builder/save_data",
+			type: 'post',
+			data:{data:{width: width,
+				height: height,
+				name: name,
+				input: input,
+				length: length,
+				entries: entries,
+				category_id: element_type,
+				form_id: <%=@form.id%>
+			}},
+			success: function(data){
+				createElement(element_type,name,input,length,entries,count,elementId);
+			},
+			
+		});
+		
+	}
+	else
+	{
+		
+		event.preventDefault();
+		
+	}		
+	});
+	
+	function checkIfValidElement()
+	{
+		var flag=false;
+		var count=0;
+		var $fields=new Array();
+		$fields.push($("#name"));
+		$fields.push($("#length"));
+		$fields.push($("#entries"));
+		$('.validationError').remove();
+		for(var i=0; i< $fields.length; i++)
+		{
+			if($($fields[i]).is(':visible'))
+			{	
+				var name=($($fields[i]).val());
+				if(name==''||name==null)
+				{
+					//alert($($fields[i]).attr('id'));
+					//alert(name);
+					count++;
+					$($fields[i]).after("<div class='validationError'>Invalid "+$($fields[i]).attr('id')+"</div>");
+				}				
+			}
+			
+		}
+		//alert(count);
+		if(count==0)
+		flag=true;
+				
+		return flag;
+	}
+	
+	function createEditLink(elementId)
+	{
+		var newlink=document.createElement('a');
+		newlink.setAttribute('href','/form_builder/edit_elements/'+elementId);
+		newlink.innerHTML="";
+		newlink.setAttribute('class','edit');
+		return(newlink);
+	}
+	function createClearDiv()
+	{
+		var newDiv=document.createElement('div');
+		newDiv.setAttribute('class','clear');
+		return newDiv;		
+	}
+	
+	function createDeleteLink(elementId)
+	{
+		var newlink=document.createElement('a');
+		newlink.setAttribute('href','/form_builder/delete_elements/'+elementId);
+		newlink.innerHTML="";
+		newlink.setAttribute('data-remote',true);
+		newlink.setAttribute('data-confirm',"Are you sure");
+		newlink.setAttribute('class','delete');
+		return(newlink);
+	}
+	function createLabel(element_type,name,input,length,entries,count,elementId)
+	{
+	    newDivMain=document.createElement('div')
+	    newDivMain.setAttribute('class','formRow');
+		newDiv=document.createElement('div');
+		newList=document.createElement('li');
+		newDiv.setAttribute('class','repeatDiv');
+		newDiv.setAttribute('id',"Label_"+(elementId-1));			
+		newList.setAttribute('id',(elementId-1));
+		newList.setAttribute('class','formRowList');
+		newLabel=document.createElement('div');
+		newLabel.setAttribute('class','label')
+		newLabel.innerHTML=name;
+		//var newlink=createDeleteLink(elementId-1);
+		//$(newDiv).append(newLabel);
+		//$(newDiv).append(newlink);
+		$(newDivMain).append(newLabel);
+		$(newList).append(newDivMain);
+		return newList;
+	}
+	
+	function createElement(element_type,name,input,length,entries,count,elementId)
+	{
+		//alert(elementId);
+		if(element_type==1)
+		{
+		    //createLabel(element_type,name,input,length,entries,count,elementId);	
+			// newDiv=document.createElement('div');
+			// newDiv.setAttribute('class','repeatDiv');
+			// newDiv.setAttribute('id',"Label"+elementId);			
+			// newLabel=document.createElement('label');
+			// newLabel.setAttribute('class','formLabel')
+			// newLabel.innerHTML=name;
+			// var newlink=createDeleteLink(elementId);
+			// $(newDiv).append(newLabel);
+			// $(newDiv).append(newlink);
+			// $(".rightContainer").append(newDiv);
+			
+		}
+		else if(element_type==2)
+		{
+			newList=createLabel(element_type,name,input,length,entries,count,elementId);
+			var existId=$(newList).attr('id');
+			//alert(existId);	
+			newDiv=document.createElement('div');
+			newDiv2=document.createElement('div');
+			//newList=document.createElement('li');
+			newDiv.setAttribute('class','input');
+			newDiv.setAttribute('id',"TextArea_"+elementId);
+			newDiv2.setAttribute('class','fLeft');
+			newText=document.createElement('input');
+			newText.setAttribute('type','text');
+			newText.setAttribute('class','input02 waterMark inputTxt');
+			//var newlink=createDeleteLink(elementId);
+			var textValue= name + "["+length+" characters of "+input+" type]";
+			newText.setAttribute('value',textValue);
+			newText.setAttribute('readonly','readonly');
+			newList.setAttribute('id',(existId)+"_"+(elementId));
+			var concatId=existId+"_"+elementId;
+			var newlink2=createDeleteLink(concatId);
+			var newlink=createEditLink(concatId);
+			$(newDiv2).append(newText);
+			$(newDiv).append(newDiv2);
+			$(newDiv).append(newlink);
+			$(newDiv).append(newlink2);
+			//$(newList).append(newlink);
+			var clearDiv=createClearDiv();
+			$(newList).children().append(newDiv);
+			$(newList).children().append(clearDiv);			
+			$("#sortable").append(newList);
+			increaseColHeight();
+			
+		}
+		else if(element_type==3)
+		{
+			newList=createLabel(element_type,name,input,length,entries,count,elementId);	
+			var existId=$(newList).attr('id');
+			//alert(entries);
+			var entryArray=entries.split(",");
+			//alert(entryArray.length);
+			newDiv=document.createElement('div');
+			newDiv2=document.createElement('div');
+			newDiv2.setAttribute('class','fLeft');
+			//newList=document.createElement('li');
+			newDiv.setAttribute('class','input');
+			newDiv.setAttribute('id',"SingleChoice_"+elementId);
+			//var newlink=createDeleteLink(elementId);
+			//$(newDiv).html("<span class='radioLabel'>"+name+"</span>");
+			var newSelect=document.createElement('select');
+			newSelect.setAttribute('name',name);
+			newSelect.setAttribute('class','select01');
+			for(var i=0;i<entryArray.length;i++)
+			{
+				var newOption=document.createElement('option');
+				newOption.value=entryArray[i];
+				newOption.text=entryArray[i];
+				newSelect.add(newOption, null);
+			}
+			$(newDiv2).append(newSelect);
+			$(newDiv).append(newDiv2);
+			var concatId=existId+"_"+elementId;
+			var newlink2=createDeleteLink(concatId);
+			var newlink=createEditLink(concatId);
+			newList.setAttribute('id',(existId)+"_"+(elementId));
+			$(newDiv).append(newlink);
+			$(newDiv).append(newlink2);
+			var clearDiv=createClearDiv();
+			$(newList).children().append(newDiv);
+			$(newList).children().append(clearDiv);
+			//$(newList).append(newlink);
+			$("#sortable").append(newList);
+			increaseColHeight();
+		}		
+		else if(element_type==4)
+		{
+			newList=createLabel(element_type,name,input,length,entries,count,elementId);	
+			var existId=$(newList).attr('id');
+			//alert(entries);
+			var entryArray=entries.split(",");
+			//alert(entryArray.length);
+			newDiv=document.createElement('div');
+			newDiv2=document.createElement('div');
+			newDiv2.setAttribute('class','fLeft');
+			//newList=document.createElement('li');
+			newDiv.setAttribute('class','input');
+			newDiv.setAttribute('id',"MultiChoice_"+elementId);
+			//var newlink=createDeleteLink(elementId);
+			//$(newDiv).html(name);
+			for(var i=0;i<entryArray.length;i++)
+			{
+				//alert("In here");
+				newCheck=document.createElement('input');
+				newCheck.setAttribute('type','checkbox');
+				labelCheck=document.createElement('label');
+				labelCheck.innerHTML=entryArray[i];
+				labelCheck.setAttribute('class','labelRadio')
+				$(newDiv2).append(newCheck);
+				$(newDiv2).append(labelCheck);
+				
+				
+			}
+			$(newDiv).append(newDiv2);
+			var concatId=existId+"_"+elementId;
+			var newlink=createDeleteLink(concatId);
+			var newlink2=createEditLink(concatId);
+			newList.setAttribute('id',(existId)+"_"+(elementId));
+			$(newDiv).append(newlink);
+			$(newDiv).append(newlink2);
+			$(newList).append(newDiv);
+			//$(newList).append(newlink);
+			$("#sortable").append(newList);
+			increaseColHeight();
+		}
+		
+	}
+    function increaseColHeight()
+    {
+    	var eqlHeight = $('.colTwo').height() + 'px';
+    	//alert(eqlHeight);
+		//$('.colOne').height(eqlHeight)
+		$('.colOne').height("380px");
+    }
+	});
+	
+	
+</script>
+<div class="contentWrapper">
+<div class="colOne rBox">
+	<h2 class="heading">New Form</h2>
+		<div class="formWrapper">
+			<%= render :partial => '_left_navigation', :object=> @categories %>
+		</div>
+</div>
+<div class="colTwo rBox">
+	<%=render :partial=> 'center_form', :object=> @form%>
+</div>
+
+<div class="clear">
+	
+</div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+<form id='27'>
+<Title name= 'My new form' />
+<Image src='http://172.20.4.112:4000/system/images/27/small/cancel.png'/>
+<Label width='fill_parent' height='wrap_content' name='Last name' position='1'>
+</Label>
+<TextArea width='fill_parent' height='wrap_content' name='Last name' input='alphabets' length='40' position='2'>
+</TextArea>
+<Label width='fill_parent' height='wrap_content' name='First name' position='3'>
+</Label>
+<TextArea width='fill_parent' height='wrap_content' name='First name' input='alphabets' length='40' position='4'>
+</TextArea>
+</form>

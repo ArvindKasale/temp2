@@ -1,0 +1,263 @@
+/*
+ * This is a manifest file that'll automatically include all the stylesheets available in this directory
+ * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
+ * the top of the compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ *= require_tree . 
+*/
+
+/* Style for form builder*/
+
+.validationError
+{
+	font-size: 14px;
+	color: #FF0000;	
+}
+.create
+{
+text-decoration: none;
+
+}
+
+#tempLabel
+{
+ width:100px;
+ height: 40px;
+ background-color: #FF0000;
+  
+}
+
+.indexContainer
+{
+height: 300px;
+width: 800px;
+margin-top: 50px;	
+}
+
+.newIndex
+{
+	padding:5px;
+	border: 2px solid #1F9E73;
+	border-radius: 5px;
+	width:350px;
+	float: left;
+	position:relative;
+	
+}
+.openIndex
+{
+	padding: 5px;
+	margin-left:10px;
+	border-radius: 5px;
+	border: 2px solid #1F9E73;
+	float:left;
+	position:relative;
+	width:350px;
+	
+}
+.saveForm
+{
+	font-size: 16px;
+	font-family: Arial;
+	color: #1F9E73;
+	padding: 5px;
+	
+}
+.saveForm a
+{
+	
+	color: #1F9E73 !important;
+	text-decoration: none;
+}
+#saveForm:hover
+{
+	
+}
+
+
+.deleteLink 
+{
+  color: red;
+  font-size: 10px;
+  text-decoration: none;
+  padding: 3px;
+}
+.deleteLink:hover
+{
+	background-color: red;
+	color: white;
+}
+.labelRadio
+{
+	line-height: 20px;
+	font-size: 18px;
+	
+}
+.repeatDiv
+{
+	padding: 5px;
+}
+.newOpen
+{
+	font-size: 20px;
+	font-weight: 600;
+	color: #3B79DD;
+	
+}
+.newOpen a
+{
+	text-decoration: none;
+	
+}
+.formSelectField{
+	font-size: 16px;
+	line-height: 14px;
+	width: 40%;
+	text-align: center;
+	color: #000000;
+	background-color: #FFFFFF;
+	border: 2px solid #ADD5EA;
+	border-radius: 5px;
+	padding: 5px;
+	
+}
+.formTextField
+{
+	font-size: 16px;
+	line-height: 20px;
+	width: 70%;
+	text-align: center;
+	color: #000000;
+	background-color: #FFFFFF;
+	border: 2px solid #ADD5EA;
+	border-radius: 5px;
+	padding: 5px;
+}
+.formTextField p
+{
+	font-size: 10px;
+	
+}
+.formLabel
+{
+	font-size: 18px;
+	font-family: Arial;
+	text-align: left;
+	width: 70%;
+	padding: 5px;
+}
+.container
+{
+	width: 800px;
+	height: auto !important;
+	height: 600px;
+	min-height: 600px;
+	
+
+}
+.leftContainer select 
+{
+	font-size: 15px;
+	background-color: #FFFFFF;
+	border: 2px #ADD5EA solid;
+	border-radius: 4px;
+	width:150px;
+}
+.leftContainer input 
+{
+	font-size: 15px;
+	background-color: #FFFFFF;
+	border: 2px #ADD5EA solid;
+	border-radius: 4px;
+	width:150px;
+}
+
+.leftContainer
+{
+	padding: 5px;
+	position: relative;
+	width: 20%;
+	height: 400px;
+	
+	float: left;
+	font-size: 16px;
+	
+}
+.rightContainer
+{
+	width: 75%;
+	height: auto !important;
+	height: 600px;
+	min-height: 600px;
+	position: relative;
+	float: left;
+	border: 5px solid #666666;
+	border-radius: 5px;
+	background-color: #FFFFFF;
+	
+}
+
+.rightContainer ul { list-style-type: none;}
+
+
+
+
+
+//Scaffold css
+
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px; }
+
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px; }
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px; }
+
+a {
+  color: #000;
+  &:visited {
+    color: #666; }
+  &:hover {
+    color: #fff;
+    background-color: #000; } }
+
+div {
+  &.field, &.actions {
+    margin-bottom: 10px; } }
+
+#notice {
+  color: green; }
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table; }
+
+#error_explanation {
+  width: 450px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 0;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    margin-bottom: 0px;
+    background-color: #c00;
+    color: #fff; }
+  ul li {
+    font-size: 12px;
+    list-style: square; } }

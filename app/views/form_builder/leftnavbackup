@@ -1,0 +1,54 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#elements").change(function() {
+			selectedId = $(this).val();
+			if(selectedId == 2) {
+				$(".options").attr("style", "display:none");
+				$(".length").attr("style", "display:block");
+				$(".type").attr("style", "display:block");
+			} else if(selectedId == 3) {
+				$(".length").attr("style", "display:none");
+				$(".type").attr("style", "display:none");
+				$(".options").attr("style", "display:block");
+			} else if(selectedId == 4) {
+				$(".type").attr("style", "display:none");
+				$(".length").attr("style", "display:none");
+				$(".options").attr("style", "display:block");
+			}
+		});
+	});
+
+</script>
+<div>
+	<%= label_tag "Element Type"%>
+	<%= select_tag "elements",options_from_collection_for_select(@categories,"id","title",{:include_blank=> true})%>
+</div>
+<div class="optionsForElement" id="optionsForElement" style="margin-top: 10px">
+	<div class="width">
+		<%= label_tag "Width"%>
+		<%= select_tag "width",options_for_select([["Fill Parent","fill_parent"],["Wrap Content","wrap_content"]]) %>
+	</div>
+	<div class="height">
+		<%= label_tag "Height"%>
+		<%= select_tag "height",options_for_select([["Wrap Content","wrap_content"],["Fill Parent","fill_parent"]]) %>
+	</div>
+	<div class="name">
+		<%= label_tag "Name"%>
+		<br />
+		<%= text_field_tag "name",nil,:size=>14%>
+	</div>
+	<div class="type">
+		<%= label_tag "Type"%>
+		<br/>
+		<%= select_tag "input",options_for_select([["alphabets","alphabets"],["numeric","numeric"],["addresstype","3"]]) %>
+	</div>
+	<div class="length">
+		<%= label_tag "Length"%>
+		<%= text_field_tag "length", nil, :size=> 14%>
+	</div>
+	<div class="options" style="display:none">
+		<%= label_tag "Options for Selection"%><span style="font-size: 10px; color: red">Comma seperated</span>
+		<%= text_field_tag "entries",nil, :size=>14%>
+	</div>
+	<%= link_to "Create Element","",:id=>"create", :class=>"create"%>
+</div>

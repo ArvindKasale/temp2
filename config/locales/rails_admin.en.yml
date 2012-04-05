@@ -1,0 +1,16 @@
+en:
+  admin:
+    actions:
+      custom_action:
+        title: "My custom Action1"
+        menu: "My custom Action2"
+        breadcrumb: "My custom Action3"
+        link: "My custom Action4"
+        done: "updated"
+        
+      member_action:  
+        title: "My member Action"
+        menu: "My member Action2"
+        breadcrumb: "My member Action3"
+        link: "My member Action4"
+        done: "updated"

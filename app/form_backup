@@ -1,0 +1,375 @@
+<%=javascript_include_tag "drag_drop_sort"%>
+<script type="text/javascript">
+ $(document).ready(function(){
+ 	prePopulateData();
+ 	$("#lockForm").click(function(event){
+ 		var order="";
+ 		$("#sortable").children().each(function()
+ 		{
+ 		   
+ 		    $(this).children().each(function(){
+ 		     var id=($(this).attr("id")).split('_')[1];
+ 			 order+=id+"_";
+ 			});
+  		});
+  		$.ajax({
+  	 	url: '/form_builder/reorder_elements',
+  	 	data: {order: function(){
+  	 		return order.slice(0,(order.length-1));
+  	 	}},
+  	 	});
+ 	
+ 	
+ 	}); 	
+ 	$("#saveForm").click(function(event){
+ 	 var order="";
+ 		$("#sortable").children().each(function()
+ 		{
+ 		   
+ 		    $(this).children().each(function(){
+ 		     var id=($(this).attr("id")).split('_')[1];
+ 			 order+=id+"_";
+ 			});
+  		});
+  	 
+  	 $.ajax({
+  	 	url: '/form_builder/reorder_elements',
+  	 	data: {order: function(){
+  	 		return order.slice(0,(order.length-1));
+  	 	}},
+  	 
+  	 });	
+  	 //event.preventDefault(); 	
+ 	});
+ 	 	
+    function prePopulateData()
+    {
+    	var count=0;
+    	//alert("In here");
+    	<% @elements.each do |element|%>
+    	var element_type=<%=element.category_id%>;
+		var name="<%=element.name%>";
+		//alert(name);
+		var input="<%=element.input%>";
+		var length="<%=element.length%>";
+		var entries="<%=escape_javascript(element.entries)%>";
+		var elementId="<%=element.id%>";
+		//alert(elementId);
+		createElement(element_type,name,input,length,entries,count,elementId);
+		<%end%>
+    }
+    
+    $("#sortable").sortable({
+			revert: true
+	});   
+ 	
+ 	/* 
+ 	$(".repeatDiv").draggable({
+ 		connectToSortable: "#sortable",
+ 		helper: 'original',
+ 		containment: 'parent',
+ 		revert: 'invalid',
+ 	});
+ 	*/
+ 	//$( "ul, li" ).disableSelection();
+ 	/*$(".rightContainer").droppable({
+ 		accept: '.repeatDiv',
+ 		drop: function(event,ui)
+ 		{
+ 			$(this).append(ui.draggable);
+ 		},
+ 	});
+ 	*/
+	$("#create").click(function(event){
+		var flag=true;
+		flag=checkIfValidElement();
+		
+		if(flag)
+		{
+		var count=0;
+		var element_type=$("#elements").val();
+		var width=$("#width").val();
+		var height=$("#height").val();
+		var name=$("#name").val();
+		var input=$("#input").val();
+		var length=$("#length").val();
+		var entries=$("#entries").val();
+		//alert("")
+		event.preventDefault();
+		$.ajax({
+			url: "/form_builder/save_data",
+			type: 'post',
+			data:{data:{width: width,
+				height: height,
+				name: name,
+				input: input,
+				length: length,
+				entries: entries,
+				category_id: element_type,
+				form_id: <%=@form.id%>
+			}},
+			success: function(data){
+				createElement(element_type,name,input,length,entries,count,elementId);
+			},
+			
+		});
+		
+	}
+	else
+	{
+		
+		event.preventDefault();
+		
+	}		
+	});
+	
+	function checkIfValidElement()
+	{
+		var flag=false;
+		var count=0;
+		var $fields=new Array();
+		$fields.push($("#name"));
+		$fields.push($("#length"));
+		$fields.push($("#entries"));
+		$('.validationError').remove();
+		for(var i=0; i< $fields.length; i++)
+		{
+			if($($fields[i]).is(':visible'))
+			{	
+				var name=($($fields[i]).val());
+				if(name==''||name==null)
+				{
+					count++;
+					$($fields[i]).after("<div class='validationError'>Invalid "+$($fields[i]).attr('id')+"</div>");
+				}				
+			}
+			
+		}
+		if(count==0)
+		flag=true;
+				
+		return flag;
+	}
+	
+	function createEditLink(elementId)
+	{
+		var newlink=document.createElement('a');
+		newlink.setAttribute('href','/form_builder/edit_elements/'+elementId);
+		newlink.innerHTML="Edit";
+		newlink.setAttribute('class','deleteLink');
+		return(newlink);
+	}
+	
+	function createDeleteLink(elementId)
+	{
+		var newlink=document.createElement('a');
+		newlink.setAttribute('href','/form_builder/delete_elements/'+elementId);
+		newlink.innerHTML="Delete";
+		newlink.setAttribute('data-remote',true);
+		newlink.setAttribute('data-confirm',"Are you sure");
+		newlink.setAttribute('class','deleteLink');
+		return(newlink);
+	}
+	function createLabel(element_type,name,input,length,entries,count,elementId)
+	{
+	    
+		newDiv=document.createElement('div');
+		newList=document.createElement('li');
+		newDiv.setAttribute('class','repeatDiv');
+		newDiv.setAttribute('id',"Label_"+(elementId-1));			
+		newList.setAttribute('id',(elementId-1));
+		newLabel=document.createElement('label');
+		newLabel.setAttribute('class','formLabel')
+		newLabel.innerHTML=name;
+		//var newlink=createDeleteLink(elementId-1);
+		$(newDiv).append(newLabel);
+		//$(newDiv).append(newlink);
+		
+		$(newList).append(newDiv);
+		return newList;
+	}
+	
+	function createElement(element_type,name,input,length,entries,count,elementId)
+	{
+		//alert(elementId);
+		if(element_type==1)
+		{
+		    //createLabel(element_type,name,input,length,entries,count,elementId);	
+			// newDiv=document.createElement('div');
+			// newDiv.setAttribute('class','repeatDiv');
+			// newDiv.setAttribute('id',"Label"+elementId);			
+			// newLabel=document.createElement('label');
+			// newLabel.setAttribute('class','formLabel')
+			// newLabel.innerHTML=name;
+			// var newlink=createDeleteLink(elementId);
+			// $(newDiv).append(newLabel);
+			// $(newDiv).append(newlink);
+			// $(".rightContainer").append(newDiv);
+			
+		}
+		else if(element_type==2)
+		{
+			newList=createLabel(element_type,name,input,length,entries,count,elementId);
+			var existId=$(newList).attr('id');
+			//alert(existId);	
+			newDiv=document.createElement('div');
+			//newList=document.createElement('li');
+			newDiv.setAttribute('class','repeatDiv');
+			newDiv.setAttribute('id',"TextArea_"+elementId);
+			newText=document.createElement('input');
+			newText.setAttribute('type','text');
+			newText.setAttribute('class','formTextField');
+			//var newlink=createDeleteLink(elementId);
+			var textValue= name + "["+length+" characters of "+input+" type]";
+			newText.setAttribute('value',textValue);
+			newText.setAttribute('readonly','readonly');
+			newList.setAttribute('id',(existId)+"_"+(elementId));
+			var concatId=existId+"_"+elementId;
+			var newlink=createDeleteLink(concatId);
+			var newlink2=createEditLink(concatId);
+			$(newDiv).append(newText);
+			$(newDiv).append(newlink);
+			$(newDiv).append(newlink2);
+			//$(newList).append(newlink);
+			$(newList).append(newDiv);
+			
+			$("#sortable").append(newList);
+			
+		}
+		else if(element_type==3)
+		{
+			newList=createLabel(element_type,name,input,length,entries,count,elementId);	
+			var existId=$(newList).attr('id');
+			//alert(entries);
+			var entryArray=entries.split(",");
+			//alert(entryArray.length);
+			newDiv=document.createElement('div');
+			//newList=document.createElement('li');
+			newDiv.setAttribute('class','repeatDiv');
+			newDiv.setAttribute('id',"SingleChoice_"+elementId);
+			//var newlink=createDeleteLink(elementId);
+			//$(newDiv).html("<span class='radioLabel'>"+name+"</span>");
+			var newSelect=document.createElement('select');
+			newSelect.setAttribute('name',name);
+			newSelect.setAttribute('class','formSelectField');
+			for(var i=0;i<entryArray.length;i++)
+			{
+				var newOption=document.createElement('option');
+				newOption.value=entryArray[i];
+				newOption.text=entryArray[i];
+				newSelect.add(newOption, null);
+			}
+			$(newDiv).append(newSelect);
+			var concatId=existId+"_"+elementId;
+			var newlink=createDeleteLink(concatId);
+			var newlink2=createEditLink(concatId);
+			newList.setAttribute('id',(existId)+"_"+(elementId));
+			$(newDiv).append(newlink);
+			$(newDiv).append(newlink2);
+			$(newList).append(newDiv);
+			//$(newList).append(newlink);
+			$("#sortable").append(newList);
+			
+			
+		}		
+	/*	else if(element_type==3)
+		{
+			newList=createLabel(element_type,name,input,length,entries,count,elementId);	
+			var existId=$(newList).attr('id');
+			//alert(entries);
+			var entryArray=entries.split(",");
+			//alert(entryArray.length);
+			newDiv=document.createElement('div');
+			//newList=document.createElement('li');
+			newDiv.setAttribute('class','repeatDiv');
+			newDiv.setAttribute('id',"SingleChoice_"+elementId);
+			//var newlink=createDeleteLink(elementId);
+			//$(newDiv).html("<span class='radioLabel'>"+name+"</span>");
+			for(var i=0;i<entryArray.length;i++)
+			{
+				//alert("In here");
+				newRadio=document.createElement('input');
+				newRadio.setAttribute('type','radio');
+				newRadio.setAttribute('name',name);
+				labelRadio=document.createElement('label');
+				labelRadio.innerHTML=entryArray[i];
+				labelRadio.setAttribute('class','labelRadio')
+				$(newDiv).append(newRadio);
+				$(newDiv).append(labelRadio);
+						
+			}
+			var concatId=existId+"_"+elementId;
+			var newlink=createDeleteLink(concatId);
+			newList.setAttribute('id',(existId)+"_"+(elementId));
+			$(newDiv).append(newlink);
+			$(newList).append(newDiv);
+			//$(newList).append(newlink);
+			$("#sortable").append(newList);
+			
+			
+		}
+		*/
+		else if(element_type==4)
+		{
+			newList=createLabel(element_type,name,input,length,entries,count,elementId);	
+			var existId=$(newList).attr('id');
+			//alert(entries);
+			var entryArray=entries.split(",");
+			//alert(entryArray.length);
+			newDiv=document.createElement('div');
+			//newList=document.createElement('li');
+			newDiv.setAttribute('class','repeatDiv');
+			newDiv.setAttribute('id',"MultiChoice_"+elementId);
+			//var newlink=createDeleteLink(elementId);
+			//$(newDiv).html(name);
+			for(var i=0;i<entryArray.length;i++)
+			{
+				//alert("In here");
+				newCheck=document.createElement('input');
+				newCheck.setAttribute('type','checkbox');
+				labelCheck=document.createElement('label');
+				labelCheck.innerHTML=entryArray[i];
+				labelCheck.setAttribute('class','labelRadio')
+				$(newDiv).append(newCheck);
+				$(newDiv).append(labelCheck);
+				
+				
+			}
+			var concatId=existId+"_"+elementId;
+			var newlink=createDeleteLink(concatId);
+			var newlink2=createEditLink(concatId);
+			newList.setAttribute('id',(existId)+"_"+(elementId));
+			$(newDiv).append(newlink);
+			$(newDiv).append(newlink2);
+			$(newList).append(newDiv);
+			//$(newList).append(newlink);
+			$("#sortable").append(newList);
+		}
+		
+	}
+
+	});
+</script>
+
+<p id='notice'></p>
+<div class="newOpen"><%=link_to "New Form",form_builder_new_path%></div>	
+<div class="container">
+
+	
+<div class="leftContainer">
+	<%= render :partial => '_left_navigation', :object=> @categories %>
+</div>
+<div class="rightContainer" style="text-align: center">
+<div class="saveForm"><%=link_to "Save",form_builder_save_form_path, :id=>"saveForm", :remote=> true%>|<%=link_to "Delete",'/form_builder/delete_form/'+@form.id.to_s, :confirm=> "Are you sure"%>|<%=link_to "Lock",form_builder_lock_form_path,:id=>"lockForm"%></div>
+	
+	<div style="padding: 5px;">
+		<%=image_tag @form.image.url(:small)%>
+	</div>
+	
+	<div style="background-color: #CCCCCC; line-height: 25px; border-radius: 5px"><h2><%=@form.title%></h2></div>
+<ul id='sortable'>
+	
+</ul>
+</div>
+
+</div>

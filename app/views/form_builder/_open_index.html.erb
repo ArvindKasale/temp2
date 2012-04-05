@@ -1,0 +1,8 @@
+<span style="font-size: 22px; color: #3B79DD">Open an existing form</span>
+<div>
+<%=form_tag "/form_builder/open_form" do%>
+
+<%=select_tag "openForm", options_from_collection_for_select(@forms,"id","title")%>
+<%=submit_tag "Open Form"%>
+<%end%>
+</div>

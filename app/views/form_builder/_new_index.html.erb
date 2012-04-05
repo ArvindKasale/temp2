@@ -1,0 +1,22 @@
+<div>
+	<span style="font-size: 22px; color: #3B79DD">Create a new form</span>
+	<%=form_for @form, :url=> form_builder_create_path, :multipart=> true do |f|%>
+	<% if @form.errors.any? %>
+	<div id="error_explanation">
+		<h2><%= pluralize(@form.errors.count, "error") %> prohibited this request from being saved:</h2>
+		<ul>
+			<% @form.errors.full_messages.each do |msg| %>
+			<li>
+				<%= msg %>
+			</li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
+	<%= f.text_field "title",:id=>"title"%>
+	<br />
+	<%= f.file_field :image%>
+	<br />
+	<%= f.submit "Create Form"%>
+	<%end%>
+</div>

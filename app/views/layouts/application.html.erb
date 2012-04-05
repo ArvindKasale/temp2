@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Android Form</title>
+		<%= stylesheet_link_tag    "application" %>
+		<%= javascript_include_tag "application" %>
+		<%= csrf_meta_tags %>
+		
+	</head>
+	<body>
+	<div class="wrapper">
+		<div class="header">
+				<div class="logo">
+					<h1>Android Form</h1>
+				</div>
+				<div class="topLinks">
+					<ul>
+						<li>
+							<%if user_signed_in?%>
+								<%=link_to "Logout",destroy_user_session_path,:class=> "sublink",:method=> :delete%>
+							<%else%>
+								<%=link_to "Login",new_user_session_path,:class=> "sublink"%>	
+							<%end%>
+						</li>
+						<li>
+							<%=link_to "Home",root_path%>
+						</li>
+						<li>
+							<%if user_signed_in?%>
+								Welcome <%=current_user.email%>
+							<%end%>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div id="notice"></div>
+		<%= yield %>
+			
+			<div class="footer">
+				&nbsp;
+			</div>
+			</div>
+	</body>
+</html>

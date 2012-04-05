@@ -1,0 +1,21 @@
+<h2 class="heading"><%= @form.title%></h2>
+<div class="formWrapper">
+	<div class="formRow">
+		<%=image_tag @form.image.url(:small)%>
+		<div class="clear"></div>
+	</div>
+	<ul id="sortable">
+		
+	</ul>
+	<div class="formRow">
+		<div class="label">
+			&nbsp;
+		</div>
+		<div class="input">
+			<%=link_to "Save",form_builder_save_form_path, :id=>"saveForm",:class=>"btn type02",:remote=> true%>
+			<%=link_to "Delete",'/form_builder/delete_form/'+@form.id.to_s, :confirm=> "Are you sure",:class=>"btn type01"%>
+			<%=link_to "Lock",form_builder_lock_form_path,:id=>"lockForm",:class=>"btn type01"%>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  width: MyString
+  height: MyString
+  name: MyString
+  input: MyString
+  length: 1
+  entries: MyString
+  category_id: 1
+
+two:
+  width: MyString
+  height: MyString
+  name: MyString
+  input: MyString
+  length: 1
+  entries: MyString
+  category_id: 1

@@ -1,0 +1,14 @@
+<form id="22">
+  <SingleChoice name="Gender" entries="Male,Female" height="wrap_content" width="fill_parent">Male</SingleChoice>
+  <TextArea name="First Name" height="wrap_content" length="50" input="alphabets" width="fill_parent">number1</TextArea>
+  <TextArea name="Middle Name" height="wrap_content" length="50" input="alphabets" width="fill_parent">sdt</TextArea>
+  <TextArea name="Last Name" height="wrap_content" length="50" input="alphabets" width="fill_parent">ety</TextArea>
+  <TextArea name="Address Line 1" height="wrap_content" length="50" input="alphabets" width="fill_parent">rfgh</TextArea>
+  <TextArea name="Address Line 2" height="wrap_content" length="50" input="alphabets" width="fill_parent">ertg</TextArea>
+  <TextArea name="Address Line 3" height="wrap_content" length="50" input="alphabets" width="fill_parent">ttff</TextArea>
+  <TextArea name="PinCode" height="wrap_content" length="50" input="numeric" width="fill_parent">yyfdd</TextArea>
+  <TextArea name="State" height="wrap_content" length="50" input="alphabets" width="fill_parent">gtfe</TextArea>
+  <TextArea name="Country" height="wrap_content" length="50" input="alphabets" width="fill_parent">ytfdf</TextArea>
+  <TextArea name="Profession" height="wrap_content" length="50" input="alphabets" width="fill_parent">Student</TextArea>
+  <MultiChoice name="Languages Known" entries="C, C++, Java" height="wrap_content" width="fill_parent">C C++ Java</MultiChoice>
+</form>

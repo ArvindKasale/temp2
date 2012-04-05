@@ -1,0 +1,1 @@
+<form id='21'><Title name= 'New form 3' /><Image src='http://172.20.4.112:4000/system/images/21/small/go-icon2.jpg'/><Label width='fill_parent' height='wrap_content' name='hello'></Label><TextArea width='fill_parent' height='wrap_content' name='hello' input='alphabets' length='50'></TextArea></form>

@@ -1,0 +1,48 @@
+<h1>Listing requests</h1>
+
+<table>
+  <tr>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Address 1</th>
+    <th>Address 2</th>
+    <th>Address 3</th>
+    <th>Pincode</th>
+    <th>State</th>
+    <th>Country</th>
+    <th>Gender</th>
+    <th>Profession</th>
+    <th>Languages known</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @requests.each do |request| %>
+  <tr>
+  	
+    <td><%= request.first_name %></td>
+    <td><%= request.last_name %></td>
+    <td><%= request.address_1 %></td>
+    <td><%= request.address_2 %></td>
+    <td><%= request.address_3 %></td>
+    <td><%= request.pincode %></td>
+    <td><%= request.state %></td>
+    <td><%= request.country %></td>
+    <td><%= request.gender %></td>
+    <td><%= request.profession %></td>
+    <td><%= request.languages_known %></td>
+    <td><%= link_to 'Show', request %></td>
+    <td><%= link_to 'Edit', edit_request_path(request) %></td>
+    <td><%= link_to 'Destroy', request, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%=form_tag "/requests/saveimage", :multipart=> :true do%>
+<%=label_tag "My label" %>
+<%=file_field_tag "my_photo"%>
+<%=submit_tag%>
+<%end%>
+<br />
+<%=link_to "Call json",requests_savejson_path(), :method=> :post%>
+<%= link_to 'New Request', new_request_path %>

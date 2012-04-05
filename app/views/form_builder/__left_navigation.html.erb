@@ -1,0 +1,98 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$("#elements").change(function() {
+			
+			selectedId = $(this).val();
+			if(selectedId == 2) {
+				$("#options").attr("style", "display:none");
+				$("#lengths").attr("style", "display:block");
+				$("#type").attr("style", "display:block");
+			} else if(selectedId == 3) {
+				$("#lengths").attr("style", "display:none");
+				$("#type").attr("style", "display:none");
+				$("#options").attr("style", "display:block");
+			} else if(selectedId == 4) {
+				$("#type").attr("style", "display:none");
+				$("#lengths").attr("style", "display:none");
+				$("#options").attr("style", "display:block");
+			}
+		});
+	});
+
+</script>
+<div class="formRow">
+	<div class="label">
+		Element type
+	</div>
+	<div class="input">
+		<%= select_tag "elements",options_from_collection_for_select(@categories,"id","title",{:include_blank=> true}),:class=>'select01'%>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="formRow">
+	<div class="label">
+		Width
+	</div>
+	<div class="input">
+		<%= select_tag "width",options_for_select([["Fill Parent","fill_parent"],["Wrap Content","wrap_content"]]) ,:class=>'select01'%>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="formRow">
+	<div class="label">
+		Height
+	</div>
+	<div class="input">
+		<%= select_tag "height",options_for_select([["Wrap Content","wrap_content"],["Fill Parent","fill_parent"]]),:class=>'select01' %>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="formRow">
+	<div class="label">
+		Name
+	</div>
+	<div class="input">
+		<%= text_field_tag "name",nil,:size=>14,:class=>'input01'%>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="formRow" id="type">
+	<div class="label">
+		Type
+	</div>
+	<div class="input">
+		<%= select_tag "input",options_for_select([["alphabets","alphabets"],["numeric","numeric"],["addresstype","3"]]),:class=>'select01' %>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="formRow" id="lengths">
+	<div class="label">
+		Length
+	</div>
+	<div class="input">
+		<%= text_field_tag "length", nil, :size=> 14,:class=> 'input01'%>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="formRow" id='options' style="display: none">
+	<div class="label">
+		Options for selection
+		<div class="error">
+			Comma Separated
+		</div>
+	</div>
+	<div class="input">
+		<%= text_field_tag "entries",nil, :size=>14,:class=>'input01'%>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="formRow">
+	<div class="label">
+		&nbsp;
+	</div>
+	<div class="input">
+	<%= link_to "Create Element","",:id=>"create", :class=>"btn type01"%>
+	</div>
+	<div class="clear"></div>
+</div>
